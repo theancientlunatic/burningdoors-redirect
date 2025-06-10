@@ -42,12 +42,15 @@
 }
 
 
-    .overlay a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-    }
+ .overlay a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  pointer-events: none;
+  cursor: default;
+}
+
 
     .overlay a:hover {
       text-decoration: underline;
@@ -56,13 +59,8 @@
 </head>
 <body>
 
-  <!-- Overlay nav -->
-  <div class="overlay">
-    <a href="/contact-8-1">Contact</a>
-    <a href="/upcoming-shows">Upcoming Shows</a>
-    <a href="/past-shows">Past Shows</a>
-    <a href="/merch">Merch</a>
-  </div>
+  <div class="overlay"></div>
+
 
   <!-- Real Wix homepage, via Cloudflare Worker -->
   <iframe src="https://redirectbanner.theleatherchronicler.workers.dev/"></iframe>
