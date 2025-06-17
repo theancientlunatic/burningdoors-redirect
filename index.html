@@ -25,26 +25,29 @@
       border: none;
     }
 
-    /* 🔧 DESKTOP/TOP OVERLAY — Unchanged */
     .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 44px;
+      height: 50px; /* LOCKED */
       background: black;
       z-index: 9999;
 
-      pointer-events: none;
-      display: block;
-      box-sizing: content-box;
-      overflow: hidden;
+      display: block; /* Prevent flexbox issues */
+      pointer-events: none; /* Non-interactive */
     }
 
-    /* ✅ MOBILE FIX: Only show top bar */
+    /* Optional debug/test mode */
+    .overlay a {
+      font-size: 1rem;
+      visibility: hidden; /* Keep layout space */
+    }
+
+    /* ✅ MOBILE FIX — surgical patch only */
     @media (max-width: 768px) {
       .overlay {
-        height: 44px !important;
+        height: 50px !important;
         border: none !important;
         box-shadow: none !important;
       }
@@ -52,15 +55,17 @@
   </style>
 </head>
 <body>
+
+  <!-- Locked overlay bar -->
   <div class="overlay" aria-hidden="true">
-    <!-- Optional: invisible links for hydration anchors -->
     <a>Contact</a>
     <a>Upcoming Shows</a>
     <a>Past Shows</a>
     <a>Merch</a>
   </div>
 
-  <!-- 🔗 Your Wix Proxy Embed -->
-  <iframe src="/" title="The Burning Doors Site"></iframe>
+  <!-- Live Wix site proxy -->
+  <iframe src="https://redirectbanner.theleatherchronicler.workers.dev/"></iframe>
+
 </body>
 </html>
