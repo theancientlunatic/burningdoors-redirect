@@ -14,34 +14,57 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
+      width: 100%;
       font-family: 'Cinzel', serif;
       background: black;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    body {
+      position: relative;
+      height: 100vh;
+      width: 100vw;
     }
 
     .overlay {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
+      width: 100vw;
       height: 50px; /* LOCKED */
       background: black;
       z-index: 9999;
-
-      display: block; /* Prevent flexbox issues */
-      pointer-events: none; /* Non-interactive */
+      pointer-events: none;
+      display: block;
     }
 
     /* Optional debug/test mode */
     .overlay a {
       font-size: 1rem;
       visibility: hidden; /* Keep layout space */
+    }
+
+    iframe {
+      position: absolute;
+      top: 50px; /* Below overlay */
+      left: 0;
+      width: 100vw;
+      height: calc(100vh - 50px);
+      border: none;
+      margin: 0;
+      padding: 0;
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .overlay {
+        height: 50px;
+      }
+      iframe {
+        top: 50px;
+        height: calc(100vh - 50px);
+      }
     }
   </style>
 </head>
