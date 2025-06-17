@@ -6,91 +6,57 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Los Angeles Burning Doors — LA’s #1 Doors Tribute Band" />
 
-  <!-- Cinzel font – matches Wix nav styling -->
+  <!-- Cinzel font to match Wix header -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
-  <!-- ↓ critical inline so the bar paints before any Wix script runs -->
-  <style id="critical-overlay">.overlay{background:#000;}</style>
-
   <style>
-    /* base */
-    html,body{
-      margin:0;
-      padding:0;
-      height:100%;
-      overflow:hidden;
-      font-family:'Cinzel',serif;
-      background:#000;
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Cinzel', serif;
+      background: black;
     }
 
-    /* (Only used if you still rely on the iframe variant)
-       If the Worker already rewrites the root path directly, you can delete. */
-    iframe{
-      position:relative;
-      width:100%;
-      height:100%;
-      border:none;
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
-    /* top-only banner killer */
-    .overlay{
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      height:42px!important;          /* match exact Wix banner height */
-      width:100%!important;
-      pointer-events:none;             /* don’t block clicks */
-      z-index:9999;
-      background:#000;
-      display:flex;                    /* keeps layout stable */
-      justify-content:center;
-      align-items:center;
-      gap:1.5rem;
-    }
-    .overlay a{                       /* invisible filler links keep height */
-      visibility:hidden;
-      font-size:1rem;
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50px; /* LOCKED */
+      background: black;
+      z-index: 9999;
+
+      display: block; /* Prevent flexbox issues */
+      pointer-events: none; /* Non-interactive */
     }
 
-    /* mobile tweak – 1-px gap fix */
-    @media(max-width:768px){
-      body{
-        transform:scale(1.03);
-        transform-origin:top center;
-      }
+    /* Optional debug/test mode */
+    .overlay a {
+      font-size: 1rem;
+      visibility: hidden; /* Keep layout space */
     }
   </style>
 </head>
-
 <body>
-  <!-- black bar (no text shown, keeps structure identical on all pages) -->
+
+  <!-- Locked overlay bar -->
   <div class="overlay" aria-hidden="true">
-    <a>Contact</a><a>Upcoming Shows</a><a>Past Shows</a><a>Merch</a>
+    <a>Contact</a>
+    <a>Upcoming Shows</a>
+    <a>Past Shows</a>
+    <a>Merch</a>
   </div>
 
-  <!-- MAIN CONTENT
-       ▸ Option A (recommended today): let the Cloudflare Worker serve the Wix HTML directly.
-          In this case you DON'T need the iframe at all—delete it.
-       ▸ Option B (legacy): keep the iframe that points at the Worker endpoint.
-          Uncomment the line below if you’re still running the frame variant. -->
-<iframe
-  src="https://redirectbanner.theleatherchronicler.workers.dev/"
-  title="Burning Doors">
-</iframe>
+  <!-- Live Wix site proxy -->
+  <iframe src="https://redirectbanner.theleatherchronicler.workers.dev/"></iframe>
 
-  <!-- auto-poke Wix to force hydration on first load -->
-  <script defer>
-    window.addEventListener('load',()=>{
-      try{
-        /* Because the Worker rewrites Wix to same-origin, DOM is accessible. */
-        const homeLink=document.querySelector('a[href="/"]')||
-                         document.querySelector('header a,nav a');
-        if(homeLink) homeLink.click();
-      }catch(err){
-        console.warn('Hydration poke failed:',err);
-      }
-    });
-  </script>
 </body>
 </html>
