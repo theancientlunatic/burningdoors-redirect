@@ -26,13 +26,14 @@
       display:flex;justify-content:center;align-items:center;gap:1.5rem;
     }
     .overlay a{visibility:hidden;font-size:1rem;}
-
-    @media(max-width:768px){
+/* zero side-bars on phones */
+@media (max-width: 768px){
   iframe{
-    position:absolute;
-    top:0; left:-6vw;
-    width:112vw;
-    height:100vh;
+    position:fixed;
+    inset:-1vh -8vw 0 -8vw;   /* overscan & nudge up */
+    width:116vw;              /* fill width after shift */
+    height:102vh;             /* cover notch bounce */
+    transform:translateZ(0);  /* GPU kick */
   }
 }
   </style>
