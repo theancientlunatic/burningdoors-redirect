@@ -13,10 +13,10 @@
     html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
       background: black;
       font-family: 'Cinzel', serif;
-      height: 100%;
-      overflow: auto; /* Allow scroll if needed — prevents box bug */
+      overflow: hidden; /* Prevents scrollbars and layout bugs */
     }
 
     .overlay {
@@ -31,12 +31,13 @@
     }
 
     iframe {
-      display: block;
-      position: relative;
-      top: 50px; /* Pushes iframe below the overlay */
+      position: absolute;
+      top: 50px; /* Pushes iframe down below overlay */
+      left: 0;
       width: 100%;
-      height: calc(100vh - 50px); /* Mobile-safe height */
+      height: calc(100% - 50px); /* Full height minus overlay */
       border: none;
+      z-index: 1;
     }
 
     .overlay a {
