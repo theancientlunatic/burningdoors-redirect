@@ -3,60 +3,66 @@
 <head>
   <meta charset="UTF-8" />
   <title>The Burning Doors</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Los Angeles Burning Doors — LA’s #1 Doors Tribute Band" />
 
-  <!-- Cinzel font to match Wix header -->
+  <!-- Cinzel font to match Wix -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
+  <!-- Critical paint: bar appears before Wix loads -->
+  <style id="critical-overlay">.overlay{background:#000;}</style>
+
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-      font-family: 'Cinzel', serif;
-      background: black;
+    html,body{
+      margin:0;padding:0;height:100%;overflow:hidden;
+      font-family:'Cinzel',serif;background:#000;
     }
+    iframe{position:relative;width:100%;height:100%;border:none;}
 
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
+    /* Top-edge banner killer */
+    .overlay{
+      position:fixed;top:0;left:0;right:0;height:42px!important;width:100%!important;
+      pointer-events:none;z-index:9999;background:#000;
+      display:flex;justify-content:center;align-items:center;gap:1.5rem;
     }
+    .overlay a{visibility:hidden;font-size:1rem;}
 
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 50px; /* LOCKED */
-      background: black;
-      z-index: 9999;
-
-      display: block; /* Prevent flexbox issues */
-      pointer-events: none; /* Non-interactive */
-    }
-
-    /* Optional debug/test mode */
-    .overlay a {
-      font-size: 1rem;
-      visibility: hidden; /* Keep layout space */
+    /* Mobile 1-px gutter fix */
+    @media(max-width:768px){
+      body{transform:scale(1.03);transform-origin:top center;}
     }
   </style>
 </head>
-<body>
 
-  <!-- Locked overlay bar -->
+<body>
   <div class="overlay" aria-hidden="true">
-    <a>Contact</a>
-    <a>Upcoming Shows</a>
-    <a>Past Shows</a>
-    <a>Merch</a>
+    <a>Contact</a><a>Upcoming Shows</a><a>Past Shows</a><a>Merch</a>
   </div>
 
-  <!-- Live Wix site proxy -->
-  <iframe src="https://redirectbanner.theleatherchronicler.workers.dev/"></iframe>
+  <!-- LIVE Wix content via Worker -->
+  <iframe
+    src="https://redirectbanner.theleatherchronicler.workers.dev/"
+    title="Burning Doors">
+  </iframe>
 
+  <!-- Auto-hydration watchdog -->
+  <script defer>
+  (function pokeWix(){
+    let tries=0,max=20;
+    const iv=setInterval(()=>{
+      const img=document.querySelector('img[alt*="Break"],img[src*="break"]'),
+            home=document.querySelector('a[href="/"]'),
+            inner=[...document.querySelectorAll('a[href^="/"]')][0],
+            tgt=img||home||inner;
+      if(tgt){tgt.click();clearInterval(iv);return;}
+      if(++tries>=max){
+        clearInterval(iv);
+        const evt=new MouseEvent('click',{bubbles:true,cancelable:true,view:window});
+        const el=document.elementFromPoint(innerWidth/2,innerHeight/2);
+        el&&el.dispatchEvent(evt);
+      }
+    },250);
+  })();
+  </script>
 </body>
 </html>
