@@ -25,7 +25,7 @@
       border: none;
     }
 
-    /* ✅ FIXED OVERLAY: Mobile-safe, desktop-safe */
+    /* ✅ FIXED OVERLAY */
     .overlay {
       position: fixed;
       top: 0;
@@ -45,16 +45,24 @@
       box-sizing: border-box;
     }
 
-    /* Optional spacing anchors (hidden) */
     .overlay a {
       font-size: 1rem;
       visibility: hidden;
+    }
+
+    /* ✅ MOBILE ZOOM — eliminate boxed layout look */
+    @media (max-width: 768px) {
+      iframe {
+        transform: scale(1.05);
+        transform-origin: top center;
+        width: 100vw;
+        height: 100vh;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Locked overlay bar -->
   <div class="overlay" aria-hidden="true">
     <a>Contact</a>
     <a>Upcoming Shows</a>
@@ -62,7 +70,6 @@
     <a>Merch</a>
   </div>
 
-  <!-- Live Wix site proxy -->
   <iframe src="https://redirectbanner.theleatherchronicler.workers.dev/"></iframe>
 
 </body>
