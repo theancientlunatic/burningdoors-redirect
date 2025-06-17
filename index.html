@@ -14,9 +14,15 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: black;
+      overflow: hidden;
       font-family: 'Cinzel', serif;
-      overflow: hidden; /* Prevents scrollbars and layout bugs */
+      background: black;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     .overlay {
@@ -24,25 +30,18 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 50px;
+      height: 50px; /* LOCKED */
       background: black;
       z-index: 9999;
-      pointer-events: none;
+
+      display: block; /* Prevent flexbox issues */
+      pointer-events: none; /* Non-interactive */
     }
 
-    iframe {
-      position: absolute;
-      top: 50px; /* Pushes iframe down below overlay */
-      left: 0;
-      width: 100%;
-      height: calc(100% - 50px); /* Full height minus overlay */
-      border: none;
-      z-index: 1;
-    }
-
+    /* Optional debug/test mode */
     .overlay a {
       font-size: 1rem;
-      visibility: hidden;
+      visibility: hidden; /* Keep layout space */
     }
   </style>
 </head>
