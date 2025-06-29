@@ -6,10 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Los Angeles Burning Doors — LA’s #1 Doors Tribute Band" />
 
-  <!-- Cinzel matches site branding -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
 
-  <!-- paint-blocker so the top bar never flashes white -->
+  <!-- paint-blocker so the banner never flashes white -->
   <style id="critical-overlay">.overlay{background:#000;}</style>
 
   <style>
@@ -19,25 +18,39 @@
     }
     iframe{position:relative;width:100%;height:100%;border:none;}
 
-    /* --- Top-edge banner killer (all viewports) --- */
+    /* --- universal top-edge banner killer --- */
     .overlay{
       position:fixed;top:0;left:0;right:0;
-      height:50px!important;width:100%!important;   /* 100 % to avoid forced zoom */
+      height:50px!important;width:100%!important;
       pointer-events:none;z-index:9999;background:#000;
       display:flex;justify-content:center;align-items:center;gap:1.5rem;
     }
     .overlay a{visibility:hidden;font-size:1rem;}
 
-    /* --- Mobile: shift iframe up, no overscan / scale --- */
-    @media (max-width:768px){
+    /* ===== 1. phones (≤600 px) – mild zoom-in so no black rails ===== */
+    @media (max-width:600px){
       iframe{
         position:fixed;
         top:-50px; left:0;
-        width:100vw;
-        height:calc(100vh + 50px);   /* make up for the 50 px move */
-        transform:translateZ(0);     /* GPU kick, no scale */
+        width:100vw; height:calc(100vh + 50px);
+
+        /* ~8 % zoom + slight pan left/up to fill the frame */
+        transform:scale(1.08) translate(-4%, -3%);
+        transform-origin:top left;
+        will-change:transform;
       }
     }
+
+    /* ===== 2. tablets (601-1024 px) – no zoom, just slide up ===== */
+    @media (min-width:601px) and (max-width:1024px){
+      iframe{
+        position:fixed;
+        top:-50px; left:0;
+        width:100vw; height:calc(100vh + 50px);
+        transform:translateZ(0);        /* no scale, just GPU kick */
+      }
+    }
+    /* desktop ≥1025 px: iframe keeps its default 100 % / 100 % */
   </style>
 </head>
 
@@ -52,7 +65,7 @@
     title="Burning Doors">
   </iframe>
 
-  <!-- Auto-hydration watchdog (unchanged) -->
+  <!-- Auto-hydration watchdog – unchanged -->
   <script defer>
   (function pokeWix(){
     let tries = 0, max = 20;
